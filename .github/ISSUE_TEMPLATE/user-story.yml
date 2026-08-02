@@ -1,0 +1,25 @@
+name: User Story
+
+description: Create a User Story
+
+title: "STORY-"
+
+labels:
+  - story
+
+body:
+
+  - type: textarea
+    id: user_story
+    attributes:
+      label: User Story
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+
+  - type: textarea
+    id: technical_notes
+    attributes:
+      label: Technical Notes
