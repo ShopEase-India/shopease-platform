@@ -1,0 +1,30 @@
+# ShopEase Enterprise CODEOWNERS
+
+# Platform Engineering
+
+/infrastructure/      @platform-team
+/kubernetes/          @platform-team
+/helm/                @platform-team
+/monitoring/          @platform-team
+/logging/             @platform-team
+/security/            @platform-team
+
+# Backend Engineering
+
+/backend/             @backend-team
+
+# Frontend Engineering
+
+/frontend/            @frontend-team
+
+# Documentation
+
+/docs/                @architecture-team
+/architecture/        @architecture-team
+
+# Root Repository Files
+
+README.md             @platform-team
+CONTRIBUTING.md       @platform-team
+CHANGELOG.md          @platform-team
+
