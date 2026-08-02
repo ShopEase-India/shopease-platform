@@ -1,42 +1,22 @@
-# ShopEase Enterprise CODEOWNERS
-
 # Platform Engineering
-
-/helm/                @platform-team
-/monitoring/          @platform-team
-/logging/             @platform-team
-/security/            @platform-team
+/infrastructure/    @saisatyateja
+/kubernetes/        @saisatyateja
+/helm/              @saisatyateja
+/monitoring/        @saisatyateja
+/logging/           @saisatyateja
+/security/          @saisatyateja
 
 # Backend Engineering
-
-#/backend/             @backend-team
+/backend/           @saisatyateja
 
 # Frontend Engineering
-
-/frontend/            @frontend-team
+/frontend/          @saisatyateja
 
 # Documentation
-
-#/docs/                @architecture-team
-/architecture/        @architecture-team
+/docs/              @saisatyateja
+/architecture/      @saisatyateja
 
 # Root Repository Files
-
-#README.md             @platform-team
-CONTRIBUTING.md       @platform-team
-CHANGELOG.md          @platform-team
-
-
-# Platform
-/infrastructure/ @saisatyateja
-/kubernetes/ @saisatyateja
-
-# Backend
-/backend/ @saisatyateja
-
-# Documentation
-/docs/ @saisatyateja
-
-# Root
-README.md @saisatyateja
-
+README.md           @saisatyateja
+CONTRIBUTING.md     @saisatyateja
+CHANGELOG.md        @saisatyateja
