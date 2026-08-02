@@ -2,8 +2,6 @@
 
 # Platform Engineering
 
-/infrastructure/      @platform-team
-/kubernetes/          @platform-team
 /helm/                @platform-team
 /monitoring/          @platform-team
 /logging/             @platform-team
@@ -11,7 +9,7 @@
 
 # Backend Engineering
 
-/backend/             @backend-team
+#/backend/             @backend-team
 
 # Frontend Engineering
 
@@ -19,12 +17,25 @@
 
 # Documentation
 
-/docs/                @architecture-team
+#/docs/                @architecture-team
 /architecture/        @architecture-team
 
 # Root Repository Files
 
-README.md             @platform-team
+#README.md             @platform-team
 CONTRIBUTING.md       @platform-team
 CHANGELOG.md          @platform-team
 
+
+# Platform
+/infrastructure/ @saisatyateja
+/kubernetes/ @saisatyateja
+
+# Backend
+/backend/ @saisatyateja
+
+# Documentation
+/docs/ @saisatyateja
+
+# Root
+README.md @saisatyateja

@@ -1,0 +1,27 @@
+name: Epic
+description: Create a new Epic
+title: "EPIC-"
+labels:
+  - epic
+
+body:
+
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+
+  - type: textarea
+    id: business_value
+    attributes:
+      label: Business Value
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies

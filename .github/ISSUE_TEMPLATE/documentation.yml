@@ -1,0 +1,20 @@
+name: Documentation
+
+description: Documentation Update
+
+title: "DOC-"
+
+labels:
+  - documentation
+
+body:
+
+  - type: textarea
+    id: document
+    attributes:
+      label: Document
+
+  - type: textarea
+    id: change
+    attributes:
+      label: Required Changes

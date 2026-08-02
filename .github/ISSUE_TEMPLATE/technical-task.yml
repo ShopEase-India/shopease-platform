@@ -1,0 +1,25 @@
+name: Technical Task
+
+description: Engineering Task
+
+title: "TASK-"
+
+labels:
+  - task
+
+body:
+
+  - type: textarea
+    id: task
+    attributes:
+      label: Technical Task
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation Details
+
+  - type: textarea
+    id: definition
+    attributes:
+      label: Definition of Done
