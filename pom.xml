@@ -34,7 +34,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     </properties>
-
+    <!-- Modules will be added after the services are created 
     <modules> 
         <module>backend/common-library</module> 
         <module>backend/api-gateway</module> 
@@ -48,6 +48,7 @@
         <module>backend/shipping-service</module> 
         <module>backend/notification-service</module> 
     </modules>
+    -->
 
     <dependencyManagement>
 
