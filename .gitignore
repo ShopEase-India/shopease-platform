@@ -1,0 +1,70 @@
+# Compiled Java classes and archives
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+
+# Maven build output
+/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.release.properties
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+!/.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+.out/
+.shelf/
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# Kubernetes / Helm (secret or local manifests if desired)
+*.secret.yaml
+*.secret.yml
+# .local.yaml
+
+# Operating System Files
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+~*
+.directory
+.Trash-*
+
