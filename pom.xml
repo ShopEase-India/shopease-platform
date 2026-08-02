@@ -35,8 +35,18 @@
 
     </properties>
 
-    <modules>
-
+    <modules> 
+        <module>backend/common-library</module> 
+        <module>backend/api-gateway</module> 
+        <module>backend/auth-service</module> 
+        <module>backend/user-service</module> 
+        <module>backend/product-service</module> 
+        <module>backend/inventory-service</module> 
+        <module>backend/cart-service</module> 
+        <module>backend/order-service</module> 
+        <module>backend/payment-service</module> 
+        <module>backend/shipping-service</module> 
+        <module>backend/notification-service</module> 
     </modules>
 
     <dependencyManagement>
