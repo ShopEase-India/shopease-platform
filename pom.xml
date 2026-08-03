@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-         https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- ===================================================== -->
+    <!-- Project Information                                   -->
+    <!-- ===================================================== -->
 
     <groupId>com.shopease</groupId>
     <artifactId>shopease-platform</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-
     <packaging>pom</packaging>
 
-    <name>ShopEase Enterprise Cloud Platform</name>
+    <name>ShopEase Enterprise Platform</name>
 
     <description>
-        Production-grade enterprise e-commerce platform built using
-        Java, Spring Boot, Kubernetes and AWS.
+        Production-grade cloud-native e-commerce platform built using
+        Spring Boot, Kubernetes, Docker, Terraform, Jenkins, and AWS.
     </description>
+
+    <url>https://github.com/ShopEase-India/shopease-platform</url>
+
+    <!-- ===================================================== -->
+    <!-- Global Properties                                     -->
+    <!-- ===================================================== -->
 
     <properties>
 
+        <!-- Java -->
         <java.version>21</java.version>
 
+        <!-- Spring -->
         <spring.boot.version>3.5.4</spring.boot.version>
-
         <spring.cloud.version>2025.0.0</spring.cloud.version>
 
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-
+        <!-- Maven -->
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     </properties>
+
+    <!-- ===================================================== -->
+    <!-- Child Modules                                         -->
+    <!-- ===================================================== -->
+
+    <modules>
     <!-- Modules will be added after the services are created 
-    <modules> 
         <module>backend/common-library</module> 
         <module>backend/api-gateway</module> 
         <module>backend/auth-service</module> 
@@ -47,13 +60,18 @@
         <module>backend/payment-service</module> 
         <module>backend/shipping-service</module> 
         <module>backend/notification-service</module> 
-    </modules>
     -->
+    </modules>
+
+    <!-- ===================================================== -->
+    <!-- Dependency Management                                 -->
+    <!-- ===================================================== -->
 
     <dependencyManagement>
 
         <dependencies>
 
+            <!-- Spring Boot BOM -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -62,6 +80,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- Spring Cloud BOM -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -74,12 +93,17 @@
 
     </dependencyManagement>
 
+    <!-- ===================================================== -->
+    <!-- Plugin Management                                     -->
+    <!-- ===================================================== -->
+
     <build>
 
         <pluginManagement>
 
             <plugins>
 
+                <!-- Java Compiler -->
                 <plugin>
 
                     <groupId>org.apache.maven.plugins</groupId>
@@ -90,11 +114,42 @@
 
                     <configuration>
 
-                        <source>${java.version}</source>
-
-                        <target>${java.version}</target>
+                        <release>${java.version}</release>
 
                     </configuration>
+
+                </plugin>
+
+                <!-- Unit Testing -->
+                <plugin>
+
+                    <groupId>org.apache.maven.plugins</groupId>
+
+                    <artifactId>maven-surefire-plugin</artifactId>
+
+                    <version>3.5.3</version>
+
+                </plugin>
+
+                <!-- Integration Testing -->
+                <plugin>
+
+                    <groupId>org.apache.maven.plugins</groupId>
+
+                    <artifactId>maven-failsafe-plugin</artifactId>
+
+                    <version>3.5.3</version>
+
+                </plugin>
+
+                <!-- Spring Boot -->
+                <plugin>
+
+                    <groupId>org.springframework.boot</groupId>
+
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+
+                    <version>${spring.boot.version}</version>
 
                 </plugin>
 
