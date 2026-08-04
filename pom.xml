@@ -54,9 +54,9 @@
         <module>backend/common-library</module>
         <module>backend/api-gateway</module>
         <module>backend/user-service</module>
+        <module>backend/product-service</module>
     <!-- Modules will be added after the services are created
         <module>backend/auth-service</module>
-        <module>backend/product-service</module>
         <module>backend/inventory-service</module>
         <module>backend/cart-service</module>
         <module>backend/order-service</module>
