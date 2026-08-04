@@ -53,9 +53,9 @@
     <modules>
         <module>backend/common-library</module>
         <module>backend/api-gateway</module>
+        <module>backend/user-service</module>
     <!-- Modules will be added after the services are created
         <module>backend/auth-service</module>
-        <module>backend/user-service</module>
         <module>backend/product-service</module>
         <module>backend/inventory-service</module>
         <module>backend/cart-service</module>
@@ -118,7 +118,7 @@
                     <configuration>
 
                         <release>${java.version}</release>
-
+                        <parameters>true</parameters>
                     </configuration>
 
                 </plugin>
