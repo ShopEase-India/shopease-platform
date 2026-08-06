@@ -98,8 +98,8 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <url>http://98.130.50.184:9001/repository/maven-snapshots/</url>
+            <id>shopease-maven-snapshots</id>
+            <url>http://98.130.50.184:9001/repository/shopease-maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <!-- ===================================================== -->
