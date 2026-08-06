@@ -37,6 +37,25 @@ pipeline {
                sh 'mvn -pl backend/api-gateway -am package -DskipTests'
            }
        }
+
+       stage('Publish to Nexus') {
+           steps {
+               configFileProvider([configFile(fileId: 'nexus-maven-settings', variable: 'MAVEN_SETTINGS')]) {
+                   withCredentials([usernamePassword(
+                       credentialsId: 'nexus-creds',
+                       usernameVariable: 'NEXUS_USERNAME',
+                       passwordVariable: 'NEXUS_PASSWORD'
+                   )]) {
+                       sh '''
+                           mvn -pl backend/api-gateway -am \
+                           deploy \
+                           -DskipTests \
+                           --settings $MAVEN_SETTINGS
+                       '''
+                   }
+               }
+           }
+       }
     }
 
     post {
