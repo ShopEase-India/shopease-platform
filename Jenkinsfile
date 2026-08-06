@@ -33,14 +33,14 @@ pipeline{
 
         stage('Trivy FileSystem Scan'){
             steps{
-                sh ```
+                sh '''
                     mkdir -p trivy-reports
                     trivy fs . \
                     --scanners vuln \
                     --severity HIGH,CRITICAL \
                     --format json \
                     --output trivy-reports/trivy-fs.json
-                ```
+                '''
             }
         }
 
@@ -56,7 +56,7 @@ pipeline{
 
             archiveArtifacts artifacts: 'trivy-reports/*.json',
                              fingerprint: true
-                             
+
             cleanWs()
         }
 
