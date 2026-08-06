@@ -98,8 +98,8 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>shopease-maven-snapshots</id>
-            <url>http://98.130.50.184:9001/repository/shopease-maven-snapshots/</url>
+            <id>codeartifact</id>
+            <url>https://shopease-137071594277.d.codeartifact.ap-south-1.amazonaws.com/maven/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <!-- ===================================================== -->
