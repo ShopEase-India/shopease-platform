@@ -31,6 +31,19 @@ pipeline{
             }
         }
 
+        stage('Trivy FileSystem Scan'){
+            steps{
+                sh ```
+                    mkdir -p trivy-reports
+                    trivy fs . \
+                    --scanners vuln \
+                    --severity HIGH,CRITICAL \
+                    --format json \
+                    --output trivy-reports/trivy-fs.json
+                ```
+            }
+        }
+
         stage('Package'){
             steps{
                 sh 'mvn package -DskipTests'
@@ -40,6 +53,10 @@ pipeline{
     post{
         always{
             junit '**/target/surefire-reports/*.xml'
+
+            archiveArtifacts artifacts: 'trivy-reports/*.json',
+                             fingerprint: true
+                             
             cleanWs()
         }
 
