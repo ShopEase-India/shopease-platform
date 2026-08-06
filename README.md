@@ -50,4 +50,4 @@ Current Phase:
 **Sprint 1 – Repository Initialization**
 
 The project is currently establishing its engineering foundation before application development begins.
-  
+    
