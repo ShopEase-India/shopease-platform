@@ -21,27 +21,21 @@ pipeline {
 
         stage('Compile API Gateway') {
             steps {
-                dir('backend/api-gateway') {
-                    sh 'mvn clean compile'
-                }
+                sh 'mvn -pl backend/api-gateway -am clean compile'
             }
         }
 
-        stage('Test API Gateway') {
-            steps {
-                dir('backend/api-gateway') {
-                    sh 'mvn test'
-                }
-            }
-        }
+       stage('Test API Gateway') {
+           steps {
+               sh 'mvn -pl backend/api-gateway -am test'
+           }
+       }
 
-        stage('Package API Gateway') {
-            steps {
-                dir('backend/api-gateway') {
-                    sh 'mvn package -DskipTests'
-                }
-            }
-        }
+       stage('Package API Gateway') {
+           steps {
+               sh 'mvn -pl backend/api-gateway -am package -DskipTests'
+           }
+       }
     }
 
     post {
