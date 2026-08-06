@@ -52,7 +52,6 @@ pipeline {
                            -DskipTests \
                            --settings $MAVEN_SETTINGS
                        '''
-                   }
                }
            }
        }
