@@ -40,6 +40,10 @@ pipeline{
                     --severity HIGH,CRITICAL \
                     --format json \
                     --output trivy-reports/trivy-fs.json
+                    trivy fs . \
+                    --scanners vuln \
+                    --severity HIGH,CRITICAL \
+                    --exit-code 1
                 '''
             }
         }
