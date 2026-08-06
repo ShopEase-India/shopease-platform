@@ -7,6 +7,13 @@ pipeline {
         git 'git'
     }
 
+    environment {
+            AWS_REGION = 'ap-south-1'
+            CODEARTIFACT_DOMAIN = 'shopease'
+            CODEARTIFACT_REPOSITORY = 'maven-snapshots'
+            AWS_ACCOUNT_ID = '137071594277'
+        }
+
     options {
         skipDefaultCheckout(true)
         timestamps()
@@ -38,26 +45,50 @@ pipeline {
            }
        }
 
-       stage('Publish to Nexus') {
-           steps {
-               configFileProvider([
-                   configFile(
-                       fileId: '06feaab8-4752-4b78-9ec9-b7ecc7f9121e',
-                       variable: 'MAVEN_SETTINGS'
-                   )
-               ]){
-                       sh '''
-                           mvn -pl backend/api-gateway -am \
-                           deploy \
-                           -DskipTests \
-                           --settings $MAVEN_SETTINGS
-                       '''
-               }
-           }
+       stage('Publish to AWS CodeArtifact') {
+                   steps {
+                       configFileProvider([
+                           configFile(
+                               fileId: 'codeartifact-maven-settings',
+                               variable: 'MAVEN_SETTINGS'
+                           )
+                       ]) {
+
+                           withCredentials([
+                               [$class: 'AmazonWebServicesCredentialsBinding',
+                               credentialsId: 'aws-codeartifact']
+                           ]) {
+
+                               sh '''
+                               export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
+                                   --domain ${CODEARTIFACT_DOMAIN} \
+                                   --domain-owner ${AWS_ACCOUNT_ID} \
+                                   --region ${AWS_REGION} \
+                                   --query authorizationToken \
+                                   --output text)
+
+                               mvn \
+                                 -pl backend/api-gateway \
+                                 -am \
+                                 deploy \
+                                 -DskipTests \
+                                 --settings ${MAVEN_SETTINGS}
+                               '''
+                           }
+                       }
+                   }
        }
     }
 
     post {
+         success {
+                    echo "API Gateway published successfully to AWS CodeArtifact."
+         }
+
+         failure {
+                    echo "Pipeline failed."
+         }
+
         always {
             cleanWs()
         }
