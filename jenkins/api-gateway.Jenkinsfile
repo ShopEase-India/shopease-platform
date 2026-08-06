@@ -42,7 +42,7 @@ pipeline {
            steps {
                configFileProvider([configFile(fileId: 'nexus-maven-settings', variable: 'MAVEN_SETTINGS')]) {
                    withCredentials([usernamePassword(
-                       credentialsId: 'nexus-creds',
+                       credentialsId: '06feaab8-4752-4b78-9ec9-b7ecc7f9121e',
                        usernameVariable: 'NEXUS_USERNAME',
                        passwordVariable: 'NEXUS_PASSWORD'
                    )]) {
