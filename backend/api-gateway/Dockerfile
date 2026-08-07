@@ -6,7 +6,7 @@ LABEL version="1.0.0"
 
 WORKDIR /app
 
-COPY target/api-gateway-1.0.0-SNAPSHOT.jar app.jar
+COPY backend/api-gateway/target/api-gateway-*.jar app.jar
 
 EXPOSE 8080
 
