@@ -116,6 +116,17 @@ pipeline {
             }
        }
 
+       stage('Trivy Scan') {
+           steps {
+               sh '''
+               trivy image \
+               --format html \
+               -o trivy-report.html \
+               ${IMAGE_NAME}:${IMAGE_TAG}
+               '''
+           }
+       }
+
        stage('Push Docker Image to ECR'){
             steps{
                 sh '''
@@ -136,6 +147,7 @@ pipeline {
          }
 
         always {
+            archiveArtifacts artifacts: 'trivy-report.html', fingerprint: true
             cleanWs()
         }
     }
