@@ -121,7 +121,7 @@ pipeline {
                sh '''
                trivy image \
                  --format template \
-                 --template "~/trivy/templates/html.tpl" \
+                 --template "@$Home/trivy/templates/html.tpl" \
                  -o trivy-report.html \
                  api-gateway:${IMAGE_TAG}
                '''
