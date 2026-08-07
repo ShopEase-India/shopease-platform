@@ -122,7 +122,7 @@ pipeline {
                trivy image \
                  --format json \
                  -o trivy-report.json \
-                 api-gateway:26
+                 api-gateway:${IMAGE_TAG}
                '''
            }
        }
