@@ -120,9 +120,9 @@ pipeline {
            steps {
                sh '''
                trivy image \
-               --format html \
-               -o trivy-report.html \
-               ${IMAGE_NAME}:${IMAGE_TAG}
+                 --format json \
+                 -o trivy-report.json \
+                 api-gateway:26
                '''
            }
        }
@@ -147,7 +147,7 @@ pipeline {
          }
 
         always {
-            archiveArtifacts artifacts: 'trivy-report.html', fingerprint: true
+            archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
             cleanWs()
         }
     }
