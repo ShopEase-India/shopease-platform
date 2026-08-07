@@ -110,7 +110,7 @@ pipeline {
             steps{
                 sh '''
                     docker tag \
-                    ${IMAGE_NAME}:{IMAGE_TAG} \
+                    ${IMAGE_NAME}:${IMAGE_TAG} \
                     ${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
                 '''
             }
