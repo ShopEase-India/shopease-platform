@@ -8,9 +8,13 @@ pipeline {
     }
 
     environment {
-            AWS_REGION = 'ap-south-1'
+            AWS_CODE_ARTIFACT_REGION = 'ap-south-1'
+            ECR_REPOSITORY_REGION = 'ap-south-2'
             CODEARTIFACT_DOMAIN = 'shopease'
+            ECR_REPOSITORY = 'shopease/api-gateway'
             CODEARTIFACT_REPOSITORY = 'maven-snapshots'
+            IMAGE_NAME = 'api-gateway'
+            IMAGE_TAG = "${BUILD_NUMBER}"
             AWS_ACCOUNT_ID = '137071594277'
         }
 
@@ -63,7 +67,7 @@ pipeline {
                                export CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token \
                                    --domain ${CODEARTIFACT_DOMAIN} \
                                    --domain-owner ${AWS_ACCOUNT_ID} \
-                                   --region ${AWS_REGION} \
+                                   --region ${AWS_CODE_ARTIFACT_REGION} \
                                    --query authorizationToken \
                                    --output text)
 
@@ -78,11 +82,53 @@ pipeline {
                        }
                    }
        }
+       stage('Build DockerImage'){
+            steps{
+                sh '''
+                    docker build \
+                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
+                    -f backend/api-gateway/Dockerfile .
+                '''
+            }
+       }
+       stage('ECR LOGIN'){
+            steps{
+                    withCredentials([
+                        [$class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: 'aws-codeartifact'
+                    ]]){
+                        sh'''
+                            aws ecr get-login-password \
+                            --region ${AWS_REPOSITORY_REGION} | docker login \
+                            --username AWS \
+                            --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REPOSITORY_REGION}.amazonaws.com
+                        '''
+                    }
+            }
+       }
+       stage('Tagging Image'){
+            steps{
+                sh '''
+                    docker tag \
+                    ${IMAGE_NAME}:{IMAGE_TAG} \
+                    ${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+                '''
+            }
+       }
+
+       stage('Push Docker Image to ECR'){
+            steps{
+                sh '''
+                    docker push \
+                    ${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
+                '''
+            }
+       }
     }
 
     post {
          success {
-                    echo "API Gateway published successfully to AWS CodeArtifact."
+                    echo "API Gateway artifact published successfully to AWS CodeArtifact and Image was pushed to AWS ECR."
          }
 
          failure {
