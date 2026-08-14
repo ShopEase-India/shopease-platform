@@ -13,15 +13,13 @@ pipeline {
             description: 'Select the microservice to build'
         )
     }
-    environment {
-        // Defines the scanner home using the exact underlying tool type
-        SCANNER_HOME = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-    }
+
     tools {
         jdk 'jdk21'
         maven 'maven3'
         git 'git'
         //"sonarQube Scanner" 'sonar-scanner'
+        sonarRunner 'sonar-scanner'
     }
 
     environment {
