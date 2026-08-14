@@ -1,0 +1,11 @@
+services:
+
+  - api-gateway
+
+  - product-service
+
+  - order-service
+
+  - payment-service
+
+  - inventory-service
