@@ -5,6 +5,7 @@ pipeline {
         jdk 'jdk21'
         maven 'maven3'
         git 'git'
+        sonarQubeScanner 'sonar-scanner'
     }
 
     environment {
@@ -40,6 +41,29 @@ pipeline {
        stage('Test API Gateway') {
            steps {
                sh 'mvn -pl backend/api-gateway -am test'
+           }
+       }
+
+       stage('SonarQube Analysis') {
+           steps {
+               withSonarQubeEnv('shopease-sonarqube') {
+                   sh '''
+                   mvn \
+                     -pl backend/api-gateway \
+                     -am \
+                     sonar:sonar \
+                     -Dsonar.projectKey=shopease-api-gateway \
+                     -Dsonar.projectName="ShopEase API Gateway"
+                   '''
+               }
+           }
+       }
+
+       stage('Quality Gate') {
+           steps {
+               timeout(time: 5, unit: 'MINUTES') {
+                   waitForQualityGate abortPipeline: true
+               }
            }
        }
 
