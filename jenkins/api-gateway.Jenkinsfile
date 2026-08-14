@@ -19,7 +19,7 @@ pipeline {
         maven 'maven3'
         git 'git'
         //"sonarQube Scanner" 'sonar-scanner'
-        sonarRunner 'sonar-scanner'
+        //sonarRunner 'sonar-scanner'
     }
 
     environment {
