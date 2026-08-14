@@ -1,5 +1,18 @@
 pipeline {
     agent any
+    parameters {
+        choice(
+            name: 'SERVICE',
+            choices: [
+                'api-gateway',
+                'product-service',
+                'order-service',
+                'payment-service',
+                'inventory-service'
+            ],
+            description: 'Select the microservice to build'
+        )
+    }
 
     tools {
         jdk 'jdk21'
@@ -12,11 +25,14 @@ pipeline {
             AWS_CODE_ARTIFACT_REGION = 'ap-south-1'
             ECR_REPOSITORY_REGION = 'ap-south-2'
             CODEARTIFACT_DOMAIN = 'shopease'
-            ECR_REPOSITORY = 'shopease/api-gateway'
+         // ECR_REPOSITORY = 'shopease/api-gateway'
             CODEARTIFACT_REPOSITORY = 'maven-snapshots'
-            IMAGE_NAME = 'api-gateway'
+         // IMAGE_NAME = 'api-gateway'
             IMAGE_TAG = "${BUILD_NUMBER}"
             AWS_ACCOUNT_ID = '137071594277'
+            SERVICE_NAME             = "${params.SERVICE}"
+            IMAGE_NAME               = "${params.SERVICE}"
+            ECR_REPOSITORY           = "shopease/${params.SERVICE}"
         }
 
     options {
@@ -32,15 +48,15 @@ pipeline {
             }
         }
 
-        stage('Compile API Gateway') {
+        stage('Compile') {
             steps {
-                sh 'mvn -pl backend/api-gateway -am clean compile'
+                sh 'mvn -pl backend/${SERVICE_NAME} -am clean compile'
             }
         }
 
-       stage('Test API Gateway') {
+       stage('Test') {
            steps {
-               sh 'mvn -pl backend/api-gateway -am test'
+               sh 'mvn -pl backend/${SERVICE_NAME} -am test'
            }
        }
 
@@ -49,10 +65,10 @@ pipeline {
                withSonarQubeEnv('shopease-sonarqube') {
                    sh '''
                    mvn \
-                     -pl backend/api-gateway \
+                     -pl backend/${SERVICE_NAME} \
                      -am \
                      sonar:sonar \
-                     -Dsonar.projectKey=shopease-api-gateway \
+                     -Dsonar.projectKey=shopease-${SERVICE_NAME} \
                      -Dsonar.projectName="ShopEase API Gateway"
                    '''
                }
@@ -67,9 +83,9 @@ pipeline {
            }
        }
 
-       stage('Package API Gateway') {
+       stage('Package') {
            steps {
-               sh 'mvn -pl backend/api-gateway -am package -DskipTests'
+               sh 'mvn -pl backend/${SERVICE_NAME} -am package -DskipTests'
            }
        }
 
@@ -96,7 +112,7 @@ pipeline {
                                    --output text)
 
                                mvn \
-                                 -pl backend/api-gateway \
+                                 -pl backend/${SERVICE_NAME} \
                                  -am \
                                  deploy \
                                  -DskipTests \
@@ -111,7 +127,7 @@ pipeline {
                 sh '''
                     docker build \
                     -t ${IMAGE_NAME}:${IMAGE_TAG} \
-                    -f backend/api-gateway/Dockerfile .
+                    -f backend/${SERVICE_NAME}/Dockerfile .
                 '''
             }
        }
@@ -147,7 +163,7 @@ pipeline {
                  --format template \
                  --template "@$Home/trivy/templates/html.tpl" \
                  -o trivy-report.html \
-                 api-gateway:${IMAGE_TAG}
+                 ${IMAGE_NAME}:${IMAGE_TAG}
                '''
            }
        }
@@ -164,7 +180,7 @@ pipeline {
 
     post {
          success {
-                    echo "API Gateway artifact published successfully to AWS CodeArtifact and Image was pushed to AWS ECR."
+                    echo "${SERVICE_NAME} artifact published successfully to CodeArtifact and image pushed to ECR."
          }
 
          failure {
