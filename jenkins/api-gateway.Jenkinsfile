@@ -157,8 +157,8 @@ pipeline {
        stage('Build Image'){
             steps{
                 dockerBuild(
-                    image: ${IMAGE_NAME},
-                    tag: ${IMAGE_TAG},
+                    image: "${IMAGE_NAME}",
+                    tag: "${IMAGE_TAG}",
                     dockerfile: "backend/${params.SERVICE}/Dockerfile"
                 )
             }
