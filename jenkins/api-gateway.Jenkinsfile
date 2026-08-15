@@ -95,7 +95,7 @@ pipeline {
 
        stage('Sonarqube Analysis'){
            steps{
-               sonarqubeAnalysisService(params.SERVICE)
+               sonarAnalysis(params.SERVICE)
            }
        }
 
