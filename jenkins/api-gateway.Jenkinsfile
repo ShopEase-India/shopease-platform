@@ -34,6 +34,7 @@ pipeline {
             AWS_ACCOUNT_ID = '137071594277'
             SERVICE_NAME             = "${params.SERVICE}"
             IMAGE_NAME               = "${params.SERVICE}"
+            ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com"
             ECR_REPOSITORY           = "shopease/${params.SERVICE}"
         }
 
@@ -190,24 +191,32 @@ pipeline {
 
        stage('Trivy Scan') {
            steps {
-               sh '''
+              /*  sh '''
                trivy image \
                  --format template \
                  --template "@$Home/trivy/templates/html.tpl" \
                  -o trivy-report.html \
                  ${IMAGE_NAME}:${IMAGE_TAG}
-               '''
+               ''' */
+               trivyScan( image: "${IMAGE_NAME}", tag: "${IMAGE_TAG}")
            }
        }
 
-       stage('Push Docker Image to ECR'){
+       /* stage('Push Docker Image to ECR'){
             steps{
                 sh '''
                     docker push \
                     ${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
                 '''
             }
-       }
+       } */
+       stage('Push Docker Image to ECR'){
+                   steps{
+                       dockerPush(registry: "${ECR_REGISTRY}",
+                                  repository: "${ECR_REPOSITORY}",
+                                  tag: "${IMAGE_TAG}")
+                   }
+              }
     }
 
     post {
