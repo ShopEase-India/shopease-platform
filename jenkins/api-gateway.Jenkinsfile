@@ -219,7 +219,7 @@ pipeline {
          }
 
         always {
-            archiveArtifacts artifacts: '**/target/site/jacoco/*', fingerprint: true
+            archiveArtifacts artifacts: 'backend/**/target/site/jacoco/**', fingerprint: true
             archiveArtifacts artifacts: 'trivy-report.html', fingerprint: true
             cleanWs()
         }
