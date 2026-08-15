@@ -225,7 +225,7 @@ pipeline {
                                   tag: "${IMAGE_TAG}",
                                   dockerfile: "backend/${params.SERVICE}/Dockerfile",
                                   registry: "${ECR_REGISTRY}",
-                                  repository: "${ECR_REPOSITORY}"
+                                  repository: "${ECR_REPOSITORY}")
             }
        }
     }
