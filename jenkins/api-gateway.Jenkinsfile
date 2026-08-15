@@ -54,8 +54,7 @@ pipeline {
         stage('Compile') {
             steps {
                 /* compileService(params.SERVICE) */
-                mavenBuild(service: params.SERVICE,
-                            goal: "compile")
+                mavenBuild(service: params.SERVICE)
             }
         }
 
