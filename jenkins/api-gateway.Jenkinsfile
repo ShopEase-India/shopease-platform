@@ -1,3 +1,4 @@
+@Library('shopease-shared-library') _
 pipeline {
     agent any
     parameters {
@@ -49,9 +50,10 @@ pipeline {
             }
         }
 
-       /*  stage('Compile') {
+
+        stage('Compile') {
             steps {
-                sh 'mvn -pl backend/${SERVICE_NAME} -am clean compile'
+                compileService(params.SERVICE)
             }
         }
 
@@ -59,12 +61,12 @@ pipeline {
            steps {
                sh 'mvn -pl backend/${SERVICE_NAME} -am test'
            }
-       } */
-       stage('Verify') {
+       }
+       /* stage('Verify') {
            steps {
                sh 'mvn -pl backend/${SERVICE_NAME} -am verify'
            }
-       }
+       } */
 
        stage('SonarQube Analysis') {
            steps {
@@ -73,6 +75,7 @@ pipeline {
                    mvn \
                      -pl backend/${SERVICE_NAME} \
                      -am \
+                     verify \
                      sonar:sonar \
                      -Dsonar.projectKey=shopease-${SERVICE_NAME} \
                      -Dsonar.projectName=shopease-${SERVICE_NAME}
@@ -194,6 +197,7 @@ pipeline {
          }
 
         always {
+            archiveArtifacts artifacts: '**/target/site/jacoco/*', fingerprint: true
             archiveArtifacts artifacts: 'trivy-report.html', fingerprint: true
             cleanWs()
         }
