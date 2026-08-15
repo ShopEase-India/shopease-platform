@@ -57,18 +57,23 @@ pipeline {
             }
         }
 
-       stage('Test') {
+      /*  stage('Test') {
            steps {
                sh 'mvn -pl backend/${SERVICE_NAME} -am test'
            }
-       }
+       } */
+           stage('Test'){
+               steps{
+                testService(${params.SERVICE})
+               }
+           }
        /* stage('Verify') {
            steps {
                sh 'mvn -pl backend/${SERVICE_NAME} -am verify'
            }
        } */
 
-       stage('SonarQube Analysis') {
+       /* stage('SonarQube Analysis') {
            steps {
                withSonarQubeEnv('shopease-sonarqube') {
                    sh '''
@@ -82,13 +87,24 @@ pipeline {
                    '''
                }
            }
+       } */
+
+       stage('Sonarqube Analysis'){
+           steps{
+               sonarqubeAnalysisService(params.SERVICE)
+           }
        }
 
-       stage('Quality Gate') {
+       /* stage('Quality Gate') {
            steps {
                timeout(time: 5, unit: 'MINUTES') {
                    waitForQualityGate abortPipeline: true
                }
+           }
+       } */
+       stage('Quality Gate'){
+           steps{
+               qualityGateService(params.SERVICE)
            }
        }
 
