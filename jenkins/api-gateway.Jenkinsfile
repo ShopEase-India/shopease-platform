@@ -153,13 +153,14 @@ pipeline {
                        }
                    }
        }
-       stage('Build DockerImage'){
+
+       stage('Build Image'){
             steps{
-                sh '''
-                    docker build \
-                    -t ${IMAGE_NAME}:${IMAGE_TAG} \
-                    -f backend/${SERVICE_NAME}/Dockerfile .
-                '''
+                dockerBuild(
+                    image: ${IMAGE_NAME},
+                    tag: ${IMAGE_TAG},
+                    dockerfile: "backend/${params.SERVICE}/Dockerfile"
+                )
             }
        }
        stage('ECR LOGIN'){
