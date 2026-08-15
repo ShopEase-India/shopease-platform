@@ -54,7 +54,8 @@ pipeline {
         stage('Compile') {
             steps {
                 /* compileService(params.SERVICE) */
-                mavenBuild(service: params.SERVICE)
+                mavenBuild(service: params.SERVICE,
+                           goal: "compile")
             }
         }
 
@@ -113,7 +114,9 @@ pipeline {
 
        stage('Package') {
            steps {
-               sh 'mvn -pl backend/${SERVICE_NAME} -am package -DskipTests'
+               mavenBuild(service: params.SERVICE,
+                          goal "package",
+                          options: "-DskipTests")
            }
        }
 
