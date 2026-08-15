@@ -49,7 +49,7 @@ pipeline {
             }
         }
 
-        stage('Compile') {
+       /*  stage('Compile') {
             steps {
                 sh 'mvn -pl backend/${SERVICE_NAME} -am clean compile'
             }
@@ -58,6 +58,11 @@ pipeline {
        stage('Test') {
            steps {
                sh 'mvn -pl backend/${SERVICE_NAME} -am test'
+           }
+       } */
+       stage('Verify') {
+           steps {
+               sh 'mvn -pl backend/${SERVICE_NAME} -am verify'
            }
        }
 
@@ -70,7 +75,7 @@ pipeline {
                      -am \
                      sonar:sonar \
                      -Dsonar.projectKey=shopease-${SERVICE_NAME} \
-                     -Dsonar.projectName="ShopEase API Gateway"
+                     -Dsonar.projectName=shopease-${SERVICE_NAME}
                    '''
                }
            }
