@@ -115,7 +115,7 @@ pipeline {
        stage('Package') {
            steps {
                mavenBuild(service: params.SERVICE,
-                          goal "package",
+                          goal: "package",
                           options: "-DskipTests")
            }
        }
