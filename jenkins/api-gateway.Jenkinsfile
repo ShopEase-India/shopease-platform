@@ -64,7 +64,7 @@ pipeline {
        } */
            stage('Test'){
                steps{
-                testService(${params.SERVICE})
+                testService(params.SERVICE)
                }
            }
        /* stage('Verify') {
