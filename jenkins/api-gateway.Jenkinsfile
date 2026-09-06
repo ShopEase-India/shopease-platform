@@ -35,7 +35,9 @@ pipeline {
             SERVICE_NAME             = "${params.SERVICE}"
             IMAGE_NAME               = "${params.SERVICE}"
             ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com"
-            ECR_REPOSITORY           = "shopease/${params.SERVICE}"
+            ECR_REPOSITORY           = "shopease/${params.SERVICE}",
+            NAMESPACE: 'shopease',
+            CLUSTER_NAME: 'shopease-dev'
         }
 
     options {
@@ -227,6 +229,29 @@ pipeline {
                                   registry: "${ECR_REGISTRY}",
                                   repository: "${ECR_REPOSITORY}")
             }
+       }
+       stage('Checkout Kubernetes Repo') {
+           steps {
+               dir('shopease-kubernetes') {
+                   git(
+                       branch: 'main',
+                       credentialsId: 'github-k8s-readonly',
+                       url: 'git@github.com:ShopEase-India/shopease-kubernetes.git'
+                   )
+               }
+           }
+       }
+       stage('Deploy') {
+            steps {
+                  deployService(
+                      serviceName: params.SERVICE,
+                      clusterName: "${CLUSTER_NAME}",
+                      region: "${ECR_REPOSITORY_REGION}",
+                      namespace: "${NAMESPACE}",
+                      image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
+                      tag: "${IMAGE_TAG}"
+                  )
+           }
        }
     }
 
