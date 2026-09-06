@@ -251,7 +251,7 @@ pipeline {
                                        region: "${ECR_REPOSITORY_REGION}",
                                        namespace: "${NAMESPACE}",
                                        image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
-                                       tagi: "${IMAGE_TAG}"
+                                       tag: "${IMAGE_TAG}"
                                   )
                               } catch (Exception e) {
 
@@ -265,6 +265,27 @@ pipeline {
                                   throw e
                               }
                           }
+           }
+       }
+       stage('Health Check') {
+           steps {
+               script {
+                   try {
+                       healthCheck(
+                            serviceName: params.SERVICE,
+                            namespace: "${NAMESPACE}"
+                       )
+                   } catch (Exception e) {
+                       echo "Health check failed. Rolling back..."
+
+                       rolloutUndo(
+                           serviceName: params.SERVICE,
+                           namespace: "${NAMESPACE}"
+                       )
+
+                       throw e
+                   }
+               }
            }
        }
     }
