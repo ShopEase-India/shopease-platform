@@ -243,31 +243,17 @@ pipeline {
        }
        stage('Deploy') {
             steps {
-                   script {
-                              try {
-                                  deployService(
-                                       serviceName: params.SERVICE,
-                                       clusterName: "${CLUSTER_NAME}",
-                                       region: "${ECR_REPOSITORY_REGION}",
-                                       namespace: "${NAMESPACE}",
-                                       image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
-                                       tag: "${IMAGE_TAG}"
-                                  )
-                              } catch (Exception e) {
-
-                                  echo "Deployment failed. Rolling back..."
-
-                                  rolloutUndo(
-                                      serviceName: params.SERVICE,
-                                      namespace: "${NAMESPACE}"
-                                  )
-
-                                  throw e
-                              }
-                          }
+              deployService(
+                serviceName: params.SERVICE,
+                clusterName: "${CLUSTER_NAME}",
+                region: "${ECR_REPOSITORY_REGION}",
+                namespace: "${NAMESPACE}",
+                image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
+                tag: "${IMAGE_TAG}"
+              )
            }
        }
-       stage('Health Check') {
+       /* stage('Health Check') {
            steps {
                script {
                    try {
@@ -287,7 +273,7 @@ pipeline {
                    }
                }
            }
-       }
+       } */
     }
 
     post {
