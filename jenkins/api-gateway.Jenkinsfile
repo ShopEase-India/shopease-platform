@@ -234,7 +234,7 @@ pipeline {
            steps {
                dir('shopease-kubernetes') {
                    git(
-                       branch: 'main',
+                       branch: 'develop',
                        credentialsId: 'github-k8s-readonly',
                        url: 'git@github.com:ShopEase-India/shopease-kubernetes.git'
                    )
