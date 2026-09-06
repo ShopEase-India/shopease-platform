@@ -36,7 +36,7 @@ pipeline {
             IMAGE_NAME               = "${params.SERVICE}"
             ECR_REGISTRY = "${AWS_ACCOUNT_ID}.dkr.ecr.${ECR_REPOSITORY_REGION}.amazonaws.com"
             ECR_REPOSITORY  = "shopease/${params.SERVICE}"
-            NAMESPACE: 'shopease',
+            NAMESPACE: 'shopease'
             CLUSTER_NAME: 'shopease-dev'
         }
 
