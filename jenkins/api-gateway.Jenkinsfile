@@ -249,7 +249,7 @@ pipeline {
                 region: "${ECR_REPOSITORY_REGION}",
                 namespace: "${NAMESPACE}",
                 image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
-                tags: "${IMAGE_TAG}"
+                tag: "${IMAGE_TAG}"
               )
            }
        }
