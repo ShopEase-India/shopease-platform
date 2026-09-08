@@ -230,7 +230,7 @@ pipeline {
                                   repository: "${ECR_REPOSITORY}")
             }
        }
-       stage('Checkout Kubernetes Repo') {
+      /*  stage('Checkout Kubernetes Repo') {
            steps {
                dir('shopease-kubernetes') {
                    git(
@@ -238,6 +238,15 @@ pipeline {
                        credentialsId: 'github-k8s-readonlyx',
                        url: 'git@github.com:ShopEase-India/shopease-kubernetes.git'
                    )
+               }
+           }
+       } */
+       stage('Checkout Helm Repo') {
+           steps {
+               dir('shopease-helm') {
+                   git branch: 'main',
+                       credentialsId: 'github-helm-readonly',
+                       url: 'https://github.com/ShopEase-India/shopease-helm.git'
                }
            }
        }
