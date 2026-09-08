@@ -245,7 +245,7 @@ pipeline {
            steps {
                dir('shopease-helm') {
                    git branch: 'main',
-                       credentialsId: 'github-helm-readonly',
+                       credentialsId: 'github-helm-read-write',
                        url: 'git@github.com:ShopEase-India/shopease-helm.git'
                }
            }
