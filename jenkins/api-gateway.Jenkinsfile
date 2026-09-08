@@ -258,6 +258,7 @@ pipeline {
                 tag: "${IMAGE_TAG}",
                 clusterName: "${CLUSTER_NAME}",
                 region: "${ECR_REPOSITORY_REGION}",
+                namespace: "${NAMESPACE}",
                 helmRepo: 'shopease-helm'
                 /* serviceName: params.SERVICE,
                 clusterName: "${CLUSTER_NAME}",
