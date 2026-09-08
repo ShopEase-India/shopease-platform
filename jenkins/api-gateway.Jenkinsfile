@@ -254,11 +254,17 @@ pipeline {
             steps {
               deployService(
                 serviceName: params.SERVICE,
+                image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
+                tag: "${IMAGE_TAG}",
+                clusterName: "${CLUSTER_NAME}",
+                region: "${ECR_REPOSITORY_REGION}",
+                helmRepo: 'shopease-helm'
+                /* serviceName: params.SERVICE,
                 clusterName: "${CLUSTER_NAME}",
                 region: "${ECR_REPOSITORY_REGION}",
                 namespace: "${NAMESPACE}",
                 image: "${ECR_REGISTRY}/${ECR_REPOSITORY}",
-                tag: "${IMAGE_TAG}"
+                tag: "${IMAGE_TAG}" */
               )
            }
        }
