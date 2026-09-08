@@ -246,7 +246,7 @@ pipeline {
                dir('shopease-helm') {
                    git branch: 'main',
                        credentialsId: 'github-helm-readonly',
-                       url: 'https://github.com/ShopEase-India/shopease-helm.git'
+                       url: 'git@github.com:ShopEase-India/shopease-helm.git'
                }
            }
        }
