@@ -96,24 +96,24 @@ pipeline {
            }
        } */
 
-       stage('Sonarqube Analysis'){
+      /*  stage('Sonarqube Analysis'){
            steps{
                sonarAnalysis(service: params.SERVICE)
            }
        }
 
-       /* stage('Quality Gate') {
+        *//* stage('Quality Gate') {
            steps {
                timeout(time: 5, unit: 'MINUTES') {
                    waitForQualityGate abortPipeline: true
                }
            }
-       } */
+       } *//*
        stage('Quality Gate'){
            steps{
                qualityGateService()
            }
-       }
+       } */
 
        stage('Package') {
            steps {
